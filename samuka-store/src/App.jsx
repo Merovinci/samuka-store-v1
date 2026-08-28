@@ -10,11 +10,11 @@ import CategoryFilter from "./components/CategoryFilter";
 import ProductCard from "./components/ProductCard";
 import ProductDetail from "./components/ProductDetail";
 import FooterBenefits from "./components/FooterBenefits";
-import { PRODUCTS } from "./data/products";
+import { products } from "./data/products";
 import { ShoppingBag, X, Trash2, ArrowRight } from "lucide-react";
 
 export default function App() {
-  const [products] = useState(PRODUCTS);
+  const [products] = useState(products);
   const [selectedCategory, setSelectedCategory] = useState("todos");
   const [favorites, setFavorites] = useState([]);
   const [cart, setCart] = useState([]);
