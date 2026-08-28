@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // src/components/Header.jsx
-// Cabeçalho com animação de entrada em sequência (Texto + Logo)
+// Cabeçalho com animação garantida de entrada (Texto + Logo)
 // -----------------------------------------------------------------------------
 
 import React, { useState, useEffect } from "react";
@@ -18,12 +18,12 @@ export default function Header({
   const [showSearch, setShowSearch] = useState(false);
   const [animateHeader, setAnimateHeader] = useState(false);
 
-  // Dispara a animação assim que o componente carrega na tela
+  // Usa requestAnimationFrame para garantir que a classe só mude após o navegador desenhar a tela inicial
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const animationFrame = requestAnimationFrame(() => {
       setAnimateHeader(true);
-    }, 100);
-    return () => clearTimeout(timer);
+    });
+    return () => cancelAnimationFrame(animationFrame);
   }, []);
 
   return (
@@ -34,12 +34,12 @@ export default function Header({
           <Menu size={22} />
         </button>
 
-        {/* Centro: Nome + Logo Animada em Sequência */}
+        {/* Centro: Nome + Logo Animada */}
         <div
           onClick={onLogoClick}
           className="cursor-pointer flex items-center gap-2 group"
         >
-          {/* 1. Nome da Loja (Surge primeiro com Fade In) */}
+          {/* 1. Nome da Loja (Surge Primeiro) */}
           <div
             className={`flex flex-col items-center transition-all duration-700 ease-out transform ${
               animateHeader
@@ -55,27 +55,23 @@ export default function Header({
             </span>
           </div>
 
-          {/* 2. Logo do Personagem (Surge em 2º lugar com Atraso/Delay) */}
+          {/* 2. Logo do Personagem (Surge com Atraso / Delay) */}
           <div
             className={`w-7 h-7 rounded-full overflow-hidden border border-gold/40 shadow-sm shadow-gold/20 shrink-0 transition-all duration-700 delay-300 ease-out transform ${
               animateHeader
                 ? "opacity-100 scale-100 translate-x-0"
-                : "opacity-0 scale-75 -translate-x-2"
+                : "opacity-0 scale-50 -translate-x-3"
             }`}
           >
             <img
-              src="/logo.png"
+              src="/logo.png.jpeg"
               alt="Samuka Store Logo"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              onError={(e) => {
-                // Caso a imagem ainda não exista, mantém um círculo elegante
-                e.target.style.display = "none";
-              }}
             />
           </div>
         </div>
 
-        {/* Lado Direito: Busca, Favoritos e Carrinho */}
+        {/* Lado Direito: Ícones */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowSearch(!showSearch)}
