@@ -1,6 +1,5 @@
 // -----------------------------------------------------------------------------
 // src/components/ProductCard.jsx
-// Card individual de produto com badges, parcelamento e seletor rápido.
 // -----------------------------------------------------------------------------
 
 import React, { useState } from "react";
@@ -28,7 +27,12 @@ export default function ProductCard({
     setTimeout(() => setJustAdded(false), 1200);
   };
 
-  const isGradientPlaceholder = product.images[0].startsWith("from-");
+  // Pega a imagem de acordo com a cor selecionada (ou usa a primeira por fallback)
+  const currentImage = Array.isArray(product.images)
+    ? product.images[0]
+    : product.images[selectedColor] || Object.values(product.images)[0];
+
+  const isGradientPlaceholder = typeof currentImage === "string" && currentImage.startsWith("from-");
   const installmentValue = (product.price / 12).toFixed(2).replace(".", ",");
 
   return (
@@ -36,30 +40,28 @@ export default function ProductCard({
       onClick={() => onOpenDetail(product)}
       className="bg-bg-soft border border-zinc-800 rounded-2xl overflow-hidden cursor-pointer hover:border-gold/50 transition-all flex flex-col group"
     >
-      {/* Imagem / Container do Produto */}
+      {/* Imagem Dinâmica Conforme a Cor */}
       <div className="aspect-square relative overflow-hidden bg-zinc-900 flex items-center justify-center">
         {isGradientPlaceholder ? (
           <div
-            className={`w-full h-full bg-gradient-to-br ${product.images[0]} flex items-center justify-center`}
+            className={`w-full h-full bg-gradient-to-br ${currentImage} flex items-center justify-center`}
           >
             <Shirt className="text-gold/70 group-hover:scale-110 transition-transform duration-300" size={42} strokeWidth={1.25} />
           </div>
         ) : (
           <img
-            src={product.images[0]}
-            alt={product.name}
+            src={currentImage}
+            alt={`${product.name} - ${selectedColor}`}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         )}
 
-        {/* Tag de Destaque / Badge */}
         {product.tag && (
           <span className="absolute top-2 left-2 bg-black/80 backdrop-blur-md text-gold text-[9px] font-bold tracking-wider px-2 py-1 rounded-md border border-gold/30 uppercase">
             {product.tag}
           </span>
         )}
 
-        {/* Botão Favoritar */}
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -91,7 +93,7 @@ export default function ProductCard({
           </p>
         </div>
 
-        {/* Seletor rápido de cores */}
+        {/* Seletor de cores: ao clicar, altera a cor e consequentemente a imagem */}
         {product.colors.length > 1 && (
           <div className="flex gap-1.5 py-1" onClick={(e) => e.stopPropagation()}>
             {product.colors.map((c) => (
@@ -100,8 +102,8 @@ export default function ProductCard({
                 onClick={() => setSelectedColor(c)}
                 style={{ backgroundColor: COLOR_PALETTE[c] }}
                 title={c}
-                className={`w-3.5 h-3.5 rounded-full border ${
-                  selectedColor === c ? "border-gold scale-110" : "border-zinc-700"
+                className={`w-3.5 h-3.5 rounded-full border transition-transform ${
+                  selectedColor === c ? "border-gold scale-125" : "border-zinc-700 hover:scale-110"
                 }`}
               />
             ))}
