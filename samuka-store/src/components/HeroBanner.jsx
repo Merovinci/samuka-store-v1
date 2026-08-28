@@ -11,7 +11,7 @@ const BANNERS = [
     tag: "NOVA COLEÇÃO",
     title: "ELEVE SEU ESTILO",
     subtitle: "Peças exclusivas com caimento de alto padrão.",
-    image: "/products/banner1.png", // Imagem do banner 1
+    image: "/products/banner1.png.jpg", // Imagem do banner 1
     buttonText: "Ver Coleção",
   },
   {
@@ -19,7 +19,7 @@ const BANNERS = [
     tag: "EM DESTAQUE",
     title: "KITS EXCLUSIVOS",
     subtitle: "Combine e monte o visual perfeito.",
-    image: "/products/banner2.png", // Imagem do banner 2
+    image: "/products/banner2.png.webp", // Imagem do banner 2
     buttonText: "Conferir Kits",
   },
   {
@@ -27,7 +27,7 @@ const BANNERS = [
     tag: "OFERTA IMPERDÍVEL",
     title: "MAIS VENDIDOS",
     subtitle: "As peças mais procuradas da semana.",
-    image: "/products/banner3.png", // Imagem do banner 3
+    image: "/products/banner3.png.webp", // Imagem do banner 3
     buttonText: "Aproveitar",
   },
 ];
