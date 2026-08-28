@@ -1,13 +1,11 @@
 // -----------------------------------------------------------------------------
 // src/components/CategoryFilter.jsx
-// Barra de categorias (Camisetas, Moletons, Calças, Jaquetas, Acessórios) e,
-// quando "Acessórios" está ativo, uma segunda barra com as subcategorias
-// (Bonés, Correntes, Óculos, Pulseiras, Cintos). Alterna dinamicamente os
-// produtos exibidos via callbacks controlados pelo componente pai (App.jsx).
+// Carrossel de categorias circulares com imagens/ícones + subcategorias.
 // -----------------------------------------------------------------------------
 
 import React from "react";
 import { CATEGORIES, ACCESSORY_SUBCATEGORIES } from "../data/products";
+import { Shirt, Watch, Flame, Gem, Disc } from "lucide-react";
 
 export default function CategoryFilter({
   activeCategory,
@@ -15,47 +13,104 @@ export default function CategoryFilter({
   activeSubcategory,
   onSelectSubcategory,
 }) {
+  const getCategoryIcon = (id) => {
+    switch (id) {
+      case "camisetas":
+        return <Shirt size={22} />;
+      case "moletons":
+        return <Flame size={22} />;
+      case "calcas":
+        return <Disc size={22} />;
+      case "jaquetas":
+        return <Watch size={22} />;
+      case "acessorios":
+        return <Gem size={22} />;
+      default:
+        return <Shirt size={22} />;
+    }
+  };
+
   return (
-    <div>
-      <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-3">
+    <div className="mb-6">
+      {/* Scroll de Categorias Circulares */}
+      <div className="flex gap-4 overflow-x-auto no-scrollbar px-4 py-2">
         <button
           onClick={() => {
             onSelectCategory(null);
             onSelectSubcategory(null);
           }}
-          className={`px-3 py-1.5 rounded-full text-xs shrink-0 border transition-colors ${
-            !activeCategory
-              ? "bg-gold text-black border-gold font-semibold"
-              : "border-zinc-700 text-zinc-300"
-          }`}
+          className="flex flex-col items-center gap-1.5 shrink-0 group"
         >
-          Todas
-        </button>
-        {CATEGORIES.map((c) => (
-          <button
-            key={c.id}
-            onClick={() => {
-              onSelectCategory(c.id);
-              onSelectSubcategory(null);
-            }}
-            className={`px-3 py-1.5 rounded-full text-xs shrink-0 border transition-colors ${
-              activeCategory === c.id
-                ? "bg-gold text-black border-gold font-semibold"
-                : "border-zinc-700 text-zinc-300"
+          <div
+            className={`w-16 h-16 rounded-full border flex items-center justify-center transition-all ${
+              !activeCategory
+                ? "border-gold bg-gold/10 text-gold scale-105"
+                : "border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:border-zinc-700"
             }`}
           >
-            {c.label}
-          </button>
-        ))}
+            <span className="text-xs font-semibold">TUDO</span>
+          </div>
+          <span
+            className={`text-xs font-medium ${
+              !activeCategory ? "text-gold" : "text-zinc-400"
+            }`}
+          >
+            Todas
+          </span>
+        </button>
+
+        {CATEGORIES.map((c) => {
+          const isActive = activeCategory === c.id;
+          return (
+            <button
+              key={c.id}
+              onClick={() => {
+                onSelectCategory(c.id);
+                onSelectSubcategory(null);
+              }}
+              className="flex flex-col items-center gap-1.5 shrink-0 group"
+            >
+              <div
+                className={`w-16 h-16 rounded-full border overflow-hidden flex items-center justify-center transition-all ${
+                  isActive
+                    ? "border-gold bg-gold/10 text-gold scale-105"
+                    : "border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:border-zinc-700"
+                }`}
+              >
+                {c.image && c.image.startsWith("/") ? (
+                  <img
+                    src={c.image}
+                    alt={c.label}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.style.display = "none";
+                    }}
+                  />
+                ) : (
+                  getCategoryIcon(c.id)
+                )}
+              </div>
+              <span
+                className={`text-xs font-medium ${
+                  isActive ? "text-gold" : "text-zinc-400"
+                }`}
+              >
+                {c.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
+      {/* Subcategorias de Acessórios */}
       {activeCategory === "acessorios" && (
-        <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-4">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pt-3">
           <button
             onClick={() => onSelectSubcategory(null)}
             className={`px-3 py-1 rounded-full text-[11px] shrink-0 border transition-colors ${
               !activeSubcategory
-                ? "border-gold text-gold"
+                ? "border-gold text-gold bg-gold/5"
                 : "border-zinc-800 text-zinc-500"
             }`}
           >
@@ -67,7 +122,7 @@ export default function CategoryFilter({
               onClick={() => onSelectSubcategory(s.id)}
               className={`px-3 py-1 rounded-full text-[11px] shrink-0 border transition-colors ${
                 activeSubcategory === s.id
-                  ? "border-gold text-gold"
+                  ? "border-gold text-gold bg-gold/5"
                   : "border-zinc-800 text-zinc-500"
               }`}
             >
