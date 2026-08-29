@@ -41,7 +41,7 @@ export default function SplashScreen({ onFinish }) {
       <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/25 via-black to-black" />
 
       <img
-        src="/images/brand/samuka-store-logo.jpg"
+        src="/images/products/samuka.png.jpeg"
         alt="Samuka Store"
         className="relative w-44 sm:w-56 md:w-64 rounded-2xl opacity-0 animate-[logoIntro_1.1s_ease-out_forwards]"
       />
