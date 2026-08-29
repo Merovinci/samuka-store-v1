@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // src/components/Header.jsx
-// Cabeçalho com animação garantida de entrada (Texto + Logo)
+// Cabeçalho responsivo com animação garantida de entrada (Texto + Logo)
 // -----------------------------------------------------------------------------
 
 import React, { useState, useEffect } from "react";
@@ -18,7 +18,6 @@ export default function Header({
   const [showSearch, setShowSearch] = useState(false);
   const [animateHeader, setAnimateHeader] = useState(false);
 
-  // Usa requestAnimationFrame para garantir que a classe só mude após o navegador desenhar a tela inicial
   useEffect(() => {
     const animationFrame = requestAnimationFrame(() => {
       setAnimateHeader(true);
@@ -27,7 +26,7 @@ export default function Header({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-zinc-800/80 px-4 py-3">
+    <header className="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-zinc-800/80 px-4 sm:px-6 lg:px-8 py-3">
       <div className="flex items-center justify-between">
         {/* Lado Esquerdo: Menu Hambúrguer */}
         <button className="text-zinc-400 hover:text-white transition-colors">
@@ -39,7 +38,7 @@ export default function Header({
           onClick={onLogoClick}
           className="cursor-pointer flex items-center gap-2 group"
         >
-          {/* 1. Nome da Loja (Surge Primeiro) */}
+          {/* 1. Nome da Loja */}
           <div
             className={`flex flex-col items-center transition-all duration-700 ease-out transform ${
               animateHeader
@@ -47,17 +46,17 @@ export default function Header({
                 : "opacity-0 -translate-y-2"
             }`}
           >
-            <span className="font-serif tracking-widest text-gold text-sm font-bold uppercase leading-tight">
+            <span className="font-serif tracking-widest text-gold text-sm sm:text-base font-bold uppercase leading-tight">
               SAMUKA
             </span>
-            <span className="text-[9px] tracking-[0.25em] text-zinc-400 uppercase font-light -mt-0.5">
+            <span className="text-[9px] sm:text-[10px] tracking-[0.25em] text-zinc-400 uppercase font-light -mt-0.5">
               STORE
             </span>
           </div>
 
-          {/* 2. Logo do Personagem (Surge com Atraso / Delay) */}
+          {/* 2. Logo do Personagem */}
           <div
-            className={`w-7 h-7 rounded-full overflow-hidden border border-gold/40 shadow-sm shadow-gold/20 shrink-0 transition-all duration-700 delay-300 ease-out transform ${
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden border border-gold/40 shadow-sm shadow-gold/20 shrink-0 transition-all duration-700 delay-300 ease-out transform ${
               animateHeader
                 ? "opacity-100 scale-100 translate-x-0"
                 : "opacity-0 scale-50 -translate-x-3"
@@ -72,7 +71,7 @@ export default function Header({
         </div>
 
         {/* Lado Direito: Ícones */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => setShowSearch(!showSearch)}
             className="text-zinc-400 hover:text-white transition-colors"
@@ -114,7 +113,7 @@ export default function Header({
             placeholder="Buscar por produtos..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full bg-zinc-900 border border-zinc-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-gold placeholder-zinc-500"
+            className="w-full bg-zinc-900 border border-zinc-700 text-white text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-gold placeholder-zinc-500"
             autoFocus
           />
         </div>
