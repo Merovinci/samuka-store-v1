@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // src/components/ProductDetail.jsx
-// Modal de Detalhes do Produto com seleção de Tamanhos e Cores
+// Modal de Detalhes do Produto com sincronização de Imagem e Cor
 // -----------------------------------------------------------------------------
 
 import React, { useState } from "react";
@@ -24,9 +24,31 @@ export default function ProductDetail({
 
   if (!product) return null;
 
-  const currentImage = Array.isArray(product.images)
-    ? product.images[0]
-    : product.images[selectedColor] || Object.values(product.images)[0];
+  // Lógica de seleção dinâmica de Imagem baseada na Cor Selecionada
+  const getCurrentImage = () => {
+    if (!product.images) return null;
+
+    // Se product.images for um objeto mapeando cores { Preto: "/img1.jpg", Azul: "/img2.jpg" }
+    if (typeof product.images === "object" && !Array.isArray(product.images)) {
+      return product.images[selectedColor] || Object.values(product.images)[0];
+    }
+
+    // Se product.images for um Array de objetos com propriedade de cor [{ color: "Preto", url: "..." }]
+    if (Array.isArray(product.images) && typeof product.images[0] === "object") {
+      const found = product.images.find((img) => img.color === selectedColor);
+      return found ? found.url : product.images[0]?.url;
+    }
+
+    // Se for um Array simples de strings, busca o índice da cor correspondente
+    if (Array.isArray(product.images)) {
+      const colorIndex = product.colors ? product.colors.indexOf(selectedColor) : 0;
+      return product.images[colorIndex] || product.images[0];
+    }
+
+    return product.images;
+  };
+
+  const currentImage = getCurrentImage();
 
   const isGradientPlaceholder =
     typeof currentImage === "string" && currentImage.startsWith("from-");
@@ -48,7 +70,7 @@ export default function ProductDetail({
   return (
     <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] flex flex-col justify-between shadow-2xl animate-in slide-in-from-bottom duration-300">
-        {/* Cabeçalho do Modal com Imagem */}
+        {/* Cabeçalho do Modal com Imagem Dinâmica */}
         <div className="relative aspect-square w-full bg-zinc-900 flex items-center justify-center">
           {isGradientPlaceholder ? (
             <div
@@ -59,8 +81,8 @@ export default function ProductDetail({
           ) : (
             <img
               src={currentImage}
-              alt={product.name}
-              className="w-full h-full object-cover"
+              alt={`${product.name} - ${selectedColor}`}
+              className="w-full h-full object-cover transition-all duration-300"
             />
           )}
 
@@ -105,7 +127,7 @@ export default function ProductDetail({
             </p>
           </div>
 
-          {/* Seletor de Cores */}
+          {/* Seletor de Cores Dinâmico */}
           {product.colors && product.colors.length > 0 && (
             <div>
               <p className="text-xs font-semibold text-zinc-300 mb-2">
@@ -169,6 +191,9 @@ export default function ProductDetail({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
     </div>
   );
 }
