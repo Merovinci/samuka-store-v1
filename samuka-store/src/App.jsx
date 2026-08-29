@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // src/App.jsx
-// Aplicação principal com HeroBanner automático e fluxo completo
+// Aplicação principal responsiva (Mobile, Tablet e Desktop)
 // -----------------------------------------------------------------------------
 
 import React, { useState } from "react";
@@ -89,7 +89,7 @@ export default function App() {
     });
     message += `*TOTAL:* R$ ${cartTotal.toFixed(2)}`;
 
-    const phone = "5511963794400"; // Substitua pelo seu número do WhatsApp
+    const phone = "5511963794400";
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
       "_blank"
@@ -97,9 +97,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 font-sans antialiased selection:bg-gold selection:text-black">
-      {/* Contêiner com trava estilo Mobile-First em telas grandes */}
-      <div className="max-w-md mx-auto min-h-screen border-x border-zinc-900 flex flex-col justify-between bg-zinc-950 shadow-2xl relative">
+    <div className="min-h-screen bg-black text-zinc-100 font-sans antialiased selection:bg-gold selection:text-black flex flex-col justify-between">
+      {/* Container Responsivo Fluido */}
+      <div className="w-full max-w-7xl mx-auto min-h-screen flex flex-col justify-between bg-zinc-950 shadow-2xl relative">
         
         <div>
           {/* Cabeçalho */}
@@ -115,7 +115,7 @@ export default function App() {
             onSearchChange={setSearchQuery}
           />
 
-          <main className="px-4 pb-12">
+          <main className="px-4 sm:px-6 lg:px-8 pb-12">
             {/* Banner Carrossel Automático */}
             <HeroBanner
               onBannerClick={(banner) => console.log("Clicou no banner:", banner.title)}
@@ -129,18 +129,18 @@ export default function App() {
 
             {/* Título da Seção */}
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider">
                 {selectedCategory === "todos"
                   ? "Destaques"
                   : selectedCategory}
               </h3>
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs sm:text-sm text-zinc-500">
                 {filteredProducts.length} itens
               </span>
             </div>
 
-            {/* Grid de Produtos */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Grid de Produtos Responsivo: 2 colunas no mobile, 3 em tablet, 4 em desktop, 5 em monitores grandes */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -179,7 +179,7 @@ export default function App() {
         {/* Drawer de Carrinho de Compras */}
         {isCartOpen && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex justify-end">
-            <div className="w-full max-w-md bg-zinc-900 h-full flex flex-col justify-between p-4 border-l border-zinc-800 animate-in slide-in-from-right duration-300">
+            <div className="w-full max-w-md bg-zinc-900 h-full flex flex-col justify-between p-4 sm:p-6 border-l border-zinc-800 animate-in slide-in-from-right duration-300">
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
                   <div className="flex items-center gap-2 text-gold font-bold">
@@ -204,11 +204,11 @@ export default function App() {
                     cart.map((item, index) => (
                       <div key={index} className="py-3 flex justify-between items-center">
                         <div>
-                          <p className="text-xs text-zinc-200 font-semibold">{item.name}</p>
-                          <p className="text-[10px] text-zinc-400">
+                          <p className="text-xs sm:text-sm text-zinc-200 font-semibold">{item.name}</p>
+                          <p className="text-[10px] sm:text-xs text-zinc-400">
                             Cor: {item.color} | Tam: {item.size} | Qtd: {item.quantity}
                           </p>
-                          <p className="text-xs text-gold font-bold mt-0.5">
+                          <p className="text-xs sm:text-sm text-gold font-bold mt-0.5">
                             R$ {(item.price * item.quantity).toFixed(2)}
                           </p>
                         </div>
@@ -228,14 +228,14 @@ export default function App() {
               {cart.length > 0 && (
                 <div className="pt-4 border-t border-zinc-800">
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-xs text-zinc-400">Total:</span>
-                    <span className="text-base font-bold text-gold">
+                    <span className="text-xs sm:text-sm text-zinc-400">Total:</span>
+                    <span className="text-base sm:text-lg font-bold text-gold">
                       R$ {cartTotal.toFixed(2)}
                     </span>
                   </div>
                   <button
                     onClick={handleCheckoutWhatsApp}
-                    className="w-full bg-gold hover:bg-gold-light text-black font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs transition-colors"
+                    className="w-full bg-gold hover:bg-gold-light text-black font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs sm:text-sm transition-colors"
                   >
                     Finalizar no WhatsApp <ArrowRight size={16} />
                   </button>
