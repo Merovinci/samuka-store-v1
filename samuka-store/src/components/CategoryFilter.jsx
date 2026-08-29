@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // src/components/CategoryFilter.jsx
-// Carrossel de categorias circulares com imagens/ícones + subcategorias.
+// Carrossel de categorias circulares com suporte responsivo
 // -----------------------------------------------------------------------------
 
 import React from "react";
@@ -32,8 +32,8 @@ export default function CategoryFilter({
 
   return (
     <div className="mb-6">
-      {/* Scroll de Categorias Circulares */}
-      <div className="flex gap-4 overflow-x-auto no-scrollbar px-4 py-2">
+      {/* Scroll/Flex de Categorias Circulares */}
+      <div className="flex gap-4 sm:gap-6 overflow-x-auto sm:justify-center no-scrollbar px-2 py-2">
         <button
           onClick={() => {
             onSelectCategory(null);
@@ -42,7 +42,7 @@ export default function CategoryFilter({
           className="flex flex-col items-center gap-1.5 shrink-0 group"
         >
           <div
-            className={`w-16 h-16 rounded-full border flex items-center justify-center transition-all ${
+            className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border flex items-center justify-center transition-all ${
               !activeCategory
                 ? "border-gold bg-gold/10 text-gold scale-105"
                 : "border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:border-zinc-700"
@@ -71,7 +71,7 @@ export default function CategoryFilter({
               className="flex flex-col items-center gap-1.5 shrink-0 group"
             >
               <div
-                className={`w-16 h-16 rounded-full border overflow-hidden flex items-center justify-center transition-all ${
+                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border overflow-hidden flex items-center justify-center transition-all ${
                   isActive
                     ? "border-gold bg-gold/10 text-gold scale-105"
                     : "border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:border-zinc-700"
@@ -105,10 +105,10 @@ export default function CategoryFilter({
 
       {/* Subcategorias de Acessórios */}
       {activeCategory === "acessorios" && (
-        <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pt-3">
+        <div className="flex gap-2 overflow-x-auto sm:justify-center no-scrollbar px-2 pt-3">
           <button
             onClick={() => onSelectSubcategory(null)}
-            className={`px-3 py-1 rounded-full text-[11px] shrink-0 border transition-colors ${
+            className={`px-3 py-1 rounded-full text-[11px] sm:text-xs shrink-0 border transition-colors ${
               !activeSubcategory
                 ? "border-gold text-gold bg-gold/5"
                 : "border-zinc-800 text-zinc-500"
@@ -120,7 +120,7 @@ export default function CategoryFilter({
             <button
               key={s.id}
               onClick={() => onSelectSubcategory(s.id)}
-              className={`px-3 py-1 rounded-full text-[11px] shrink-0 border transition-colors ${
+              className={`px-3 py-1 rounded-full text-[11px] sm:text-xs shrink-0 border transition-colors ${
                 activeSubcategory === s.id
                   ? "border-gold text-gold bg-gold/5"
                   : "border-zinc-800 text-zinc-500"
