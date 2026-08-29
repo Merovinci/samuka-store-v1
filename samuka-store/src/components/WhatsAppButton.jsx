@@ -1,26 +1,27 @@
 // -----------------------------------------------------------------------------
 // src/components/WhatsAppButton.jsx
-// Botão flutuante "Precisa de ajuda? Falar com um atendente" — visível em
-// todas as telas (exceto a splash), fixo no canto inferior direito da
-// viewport. Padrão comum de e-commerce, funciona igual em mobile e desktop.
+// Botão Flutuante do WhatsApp
 // -----------------------------------------------------------------------------
 
 import React from "react";
 import { MessageCircle } from "lucide-react";
-import { buildWhatsAppLink, ATTENDANT_MESSAGE } from "../config/whatsapp";
 
 export default function WhatsAppButton() {
+  const phoneNumber = "5511963794400"; // Insira seu número com DDD aqui
+  const message = encodeURIComponent("Olá! Gostaria de tirar algumas dúvidas sobre os produtos.");
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
   return (
     <a
-      href={buildWhatsAppLink(ATTENDANT_MESSAGE)}
+      href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 z-30 flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5b] text-white shadow-lg shadow-black/50 rounded-full px-4 py-3 transition-transform hover:scale-105"
-      aria-label="Falar com um atendente pelo WhatsApp"
+      aria-label="Atendimento via WhatsApp"
+      className="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-110 flex items-center justify-center group"
     >
-      <MessageCircle size={20} />
-      <span className="hidden sm:inline text-sm font-semibold">
-        Precisa de ajuda?
+      <MessageCircle size={28} className="fill-current" />
+      <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out text-sm font-bold pl-0 group-hover:pl-2">
+        Falar no WhatsApp
       </span>
     </a>
   );
