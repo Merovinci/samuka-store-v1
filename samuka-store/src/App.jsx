@@ -1,19 +1,22 @@
 // -----------------------------------------------------------------------------
 // src/App.jsx
-// Aplicação principal responsiva (Mobile, Tablet e Desktop)
+// Aplicação principal com SplashScreen e WhatsAppButton inclusos
 // -----------------------------------------------------------------------------
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import HeroBanner from "./components/HeroBanner";
 import CategoryFilter from "./components/CategoryFilter";
 import ProductCard from "./components/ProductCard";
 import ProductDetail from "./components/ProductDetail";
 import FooterBenefits from "./components/FooterBenefits";
+import SplashScreen from "./components/SplashScreen";
+import WhatsAppButton from "./components/WhatsAppButton";
 import PRODUCTS from "./data/products";
 import { ShoppingBag, X, Trash2, ArrowRight } from "lucide-react";
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
   const [products] = useState(PRODUCTS);
   const [selectedCategory, setSelectedCategory] = useState("todos");
   const [favorites, setFavorites] = useState([]);
@@ -21,6 +24,14 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Controla o tempo de exibição do SplashScreen
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500); // 2.5 segundos de Splash
+    return () => clearTimeout(timer);
+  }, []);
 
   // Alterna produtos favoritos
   const handleToggleFavorite = (productId) => {
@@ -97,18 +108,18 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 font-sans antialiased selection:bg-gold selection:text-black flex flex-col justify-between">
+    <div className="min-h-screen bg-black text-zinc-100 font-sans antialiased selection:bg-gold selection:text-black flex flex-col justify-between relative">
+      {/* 1. Tela de Carregamento Inicial (Splash) */}
+      {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+
       {/* Container Responsivo Fluido */}
       <div className="w-full max-w-7xl mx-auto min-h-screen flex flex-col justify-between bg-zinc-950 shadow-2xl relative">
-        
         <div>
           {/* Cabeçalho */}
           <Header
             onLogoClick={() => setSelectedCategory("todos")}
             onCartClick={() => setIsCartOpen(true)}
-            onFavoritesClick={() => {
-              /* Ação de favoritos */
-            }}
+            onFavoritesClick={() => {}}
             cartCount={totalCartItems}
             favoritesCount={favorites.length}
             searchQuery={searchQuery}
@@ -139,7 +150,7 @@ export default function App() {
               </span>
             </div>
 
-            {/* Grid de Produtos Responsivo: 2 colunas no mobile, 3 em tablet, 4 em desktop, 5 em monitores grandes */}
+            {/* Grid de Produtos */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard
@@ -245,6 +256,9 @@ export default function App() {
           </div>
         )}
       </div>
+
+      {/* 2. Botão Flutuante do WhatsApp */}
+      <WhatsAppButton />
     </div>
   );
 }
