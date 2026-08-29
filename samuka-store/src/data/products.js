@@ -33,11 +33,14 @@ export const products = [
   // CAMISETAS
   {
     id: 1,
-    name: "Camiseta Essential",
+    name: "Camiseta Nike Basica",
     category: "camisetas",
     price: 149.9,
     tag: "MAIS VENDIDO",
-    images: ["from-zinc-800 to-zinc-950"],
+    images: {"Branco": "/products/camiseta-nike-branca.png.webp",
+             "Preto": "/products/camiseta-nike-preta.png.webp",
+             "Cinza": "/products/camiseta-nike-cinza.png.webp",
+             },
     colors: ["Preto", "Branco", "Cinza"],
     sizes: ["P", "M", "G", "GG", "XG"],
     description:
