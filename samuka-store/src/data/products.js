@@ -54,7 +54,9 @@ export const products = [
     category: "camisetas",
     price: 159.9,
     tag: null,
-    images: ["from-stone-200 to-stone-400"],
+    images: {"Branco": "/products/adidas-camisetas/adidas-branca.webp",
+             "Bege": "/products/adidas-camisetas/adidas-bege.webp",
+             },
     colors: ["Branco", "Bege"],
     sizes: ["P", "M", "G", "GG"],
     description:
