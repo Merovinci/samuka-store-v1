@@ -39,7 +39,7 @@ export const products = [
     tag: "MAIS VENDIDO",
     images: {"Branco": "/products/camiseta-nike-branca.png.webp",
              "Preto": "/products/camiseta-nike-preta.png.webp",
-             "Cinza": "/products/camiseta-nike-cinza.png.webp",
+             "Cinza": "/products/camiseta-nike-cinza.png",
              },
     colors: ["Preto", "Branco", "Cinza"],
     sizes: ["P", "M", "G", "GG", "XG"],
