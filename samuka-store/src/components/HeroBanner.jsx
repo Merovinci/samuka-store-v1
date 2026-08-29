@@ -47,24 +47,24 @@ export default function HeroBanner({ onBannerClick }) {
 
   return (
     <div className="relative w-full h-48 sm:h-64 md:h-80 rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 my-4 sm:my-6 shadow-lg group">
-      {/* Imagem de Fundo Dinâmica */}
+      {/* Imagem de Fundo Dinâmica (Opacidade 100% para mostrar a peça limpa) */}
       {currentBanner.image && (
         <img
           src={currentBanner.image}
           alt={currentBanner.title}
-          className="absolute inset-0 w-full h-full object-cover object-right opacity-60 transition-all duration-700 ease-in-out group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-right opacity-100 transition-all duration-700 ease-in-out group-hover:scale-105"
         />
       )}
 
-      {/* Sombreamento para leitura dos textos */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent p-5 sm:p-8 flex flex-col justify-center z-10">
-        <span className="text-[10px] sm:text-xs font-bold text-gold tracking-widest uppercase">
+      {/* Sombreamento leve apenas na esquerda para garantir leitura perfeita dos textos */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent p-5 sm:p-8 flex flex-col justify-center z-10">
+        <span className="text-[10px] sm:text-xs font-bold text-gold tracking-widest uppercase drop-shadow">
           {currentBanner.tag}
         </span>
-        <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide mt-1 drop-shadow-md">
+        <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide mt-1 drop-shadow-lg">
           {currentBanner.title}
         </h2>
-        <p className="text-xs sm:text-sm text-zinc-300 mt-1 sm:mt-2 max-w-[80%] sm:max-w-[50%] line-clamp-2">
+        <p className="text-xs sm:text-sm text-zinc-100 mt-1 sm:mt-2 max-w-[80%] sm:max-w-[50%] line-clamp-2 drop-shadow-md font-medium">
           {currentBanner.subtitle}
         </p>
 
