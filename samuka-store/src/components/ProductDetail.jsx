@@ -47,8 +47,8 @@ export default function ProductDetail({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] flex flex-col justify-between shadow-2xl animate-in slide-in-from-bottom duration-300">
-        {/* Cabeçalho do Modal */}
+      <div className="w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] flex flex-col justify-between shadow-2xl animate-in slide-in-from-bottom duration-300">
+        {/* Cabeçalho do Modal com Imagem */}
         <div className="relative aspect-square w-full bg-zinc-900 flex items-center justify-center">
           {isGradientPlaceholder ? (
             <div
@@ -128,7 +128,7 @@ export default function ProductDetail({
             </div>
           )}
 
-          {/* Seletor de Tamanho (P, M, G, GG, XG) */}
+          {/* Seletor de Tamanho */}
           {product.sizes && product.sizes.length > 0 && (
             <div>
               <p className="text-xs font-semibold text-zinc-300 mb-2">
@@ -169,9 +169,6 @@ export default function ProductDetail({
           </button>
         </div>
       </div>
-    </div>
-  );
-}
     </div>
   );
 }
